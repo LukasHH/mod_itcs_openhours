@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>itcs open hours</name>
+	<author>it-conserv.de</author>
+	<creationDate>Feb 2022</creationDate>
+	<copyright>Copyright (C) 2022 it-conserv.de. All rights reserved.</copyright>
+	<license>PHP files are licensed under GNU/GPL V3, CSS Style is a free resource from http://littlesnippets.net/</license>
+	<authorEmail>info@it-conserv.de</authorEmail>
+	<authorUrl>www.it-conserv.de</authorUrl>
+	<version>2.1.0</version>
+	<description>
+	<![CDATA[
+	<div class="alert alert-success container" style="background-color:#DFF0D8;border-color:#D6E9C6; color: #468847;padding: 1px 10px;">
+		<div class="row justify-content-lg-center">
+			<div class="col col-md-10 span10 offset1"  align="center">
+				<h2 style="color: #f39c12;">Open hours</h2>
+				<h4>Show your open hours in a stylish modul</h4>
+				<p> </p>
+				<p>This modul is created without javascript and the animation is only in CSS.<br />The calculation of the times is based on PHP. You can set your own time zone for each module.</p>
+			</div>
+			<div class="col col-md-4 span4 offset4">
+				<h5 align="center" style="color: #f39c12;">See the new Pro Version</h5>
+				<p align="center">Additional functions and features</p>
+				<ul>
+					<li>two different times per day</li>
+					<li>separate times on specified days (e.g. holidays)</li>
+					<li>own colors</li>
+					<li>Display your shop name</li>
+					<li>Structured Data</li>
+				</ul>
+			</div>
+			<div class="col col-md-10 span10 offset1"  align="center">
+				<p>The css-script is a free resource from <a href="http://www.littlesnippets.net" title="littlesnippets.net" target="_blank">http://www.littlesnippets.net</a></p>
+				<p>Copyright 2022 <a href="http://www.it-conserv.de/" title="it-conserv.de" target="_blank">www.it-conserv.de</a>.</p>
+			</div>								
+		</div>
+	</div>
+	]]>		
+	</description>
+	<namespace>ITCS\Module\ItcsOpenHours</namespace>
+	<languages>
+		<language tag="en-GB">language/en-GB/mod_itcs_openhours.ini</language>
+		<language tag="de-DE">language/de-DE/mod_itcs_openhours.ini</language>
+		<language tag="fr-FR">language/fr-FR/mod_itcs_openhours.ini</language>
+		<language tag="it-IT">language/it-IT/mod_itcs_openhours.ini</language>
+	</languages>	
+	<files>
+		<filename module="mod_itcs_openhours">mod_itcs_openhours.php</filename>
+		<filename>ItcsOpenHoursHelper.php</filename>
+		<filename>script.php</filename>
+		<filename>index.html</filename>
+		<filename>lizenz_gpl.txt</filename>		
+		<folder>language</folder>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+	</files>
+	<scriptfile>script.php</scriptfile>
+	<updateservers>
+		<server type="extension" priority="2" name="Modul itcs open hours">
+			https://it-conserv.de/phocadownload/module/mod_itcs_openhours/mod_itcs_openhours-update.xml
+		</server>
+	</updateservers>
+	<changelogurl>https://it-conserv.de/phocadownload/module/mod_itcs_openhours/mod_itcs_openhours-changelog.xml</changelogurl>
+	<config>
+		<fields name="params"  addfieldpath="/modules/mod_itcs_openhours/assets/elements">
+			<fieldset name="GENERAL_SETTINGS">
+				<field type="itcsdonation" />
+				<field type="spacer" name="basic_settings" label="BASIC_SETTINGS" />
+				<field name="icon" type="text" default="ion-clock" label="ION_ICON" description="ION_ICON_DESC" />
+				<field name="icon_note" type="note" class="alert alert-info" close="true" label="ICON_NOTE" />
+				<field name="color" type="list" default="0" label="COLOR" description="COLOR">
+					<option value="blue">blue</option>
+					<option value="red">red</option>
+					<option value="yellow">yellow</option>
+					<option value="navy">navy</option>
+				</field>
+				<field name="open_header" type="text" default="Öffnungszeiten" label="OPEN_HEADER" description="OPEN_HEADER_DESC" />
+				<field name="close_time" type="text" default="geschlossen" label="CLOSE_TIME" description="CLOSE_TIME_DESC" />			
+				<field name="open_text" type="text" default="Zur Zeit geöffnet" label="OPEN_TEXT" description="OPEN_TEXT_DESC" />
+				<field name="close_text" type="text" default="Zur Zeit geschlossen" label="CLOSE_TEXT" description="OPEN_TEXT_DESC" />
+				<field name="week_start" type="list" default="1" label="WEEK_START">
+					<option value="1">MONDAY</option>
+					<option value="0">SUNDAY</option>
+				</field>
+				<field name="mytimezone" type="timezone" default="UTC" label="TIMEZONE" description="">
+					<option value="UTC">JLIB_FORM_VALUE_TIMEZONE_UTC</option>
+				</field>
+				<field name="servertime" type="servertime" label="OH_TIME" description="OH_TIME_DESC" />
+		
+				<field name="tz_show" type="switcher" class="btn-group" default="0" label="OH_SHOW_TIME" description="OH_SHOW_TIME_DESC">
+					<option value="0">NO</option>
+					<option value="1">YES</option>
+				</field>
+			</fieldset>
+			<fieldset name="days">
+				<field
+					name="weekdays"
+					type="subform"
+					label="WEEKDAY_TIMES"
+					description=""
+					layout="joomla.form.field.subform.repeatable"
+					>
+					<form>
+						<fieldset name="section1">
+							<field name="note1" type="note" class="alert alert-success" label="DAY_1_NOTE" />
+							<field name="weekday1" type="text" default="Montag" label="DAY" size="10" description="DAY" />
+							<field name="weekday1_active" type="switcher"  filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday1_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday1_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday1_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday1_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section2">
+							<field name="note2" type="note" class="alert alert-success" label="DAY_2_NOTE" />
+							<field name="weekday2" type="text" default="Dienstag" label="DAY" size="10" description="DAY" />
+							<field name="weekday2_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday2_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday2_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday2_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday2_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section3">
+							<field name="note3" type="note" class="alert alert-success" label="DAY_3_NOTE" />
+							<field name="weekday3" type="text" default="Mittwoch" label="DAY" size="10" description="DAY" />
+							<field name="weekday3_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday3_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday3_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday3_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday3_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section4">
+							<field name="note4" type="note" class="alert alert-success" label="DAY_4_NOTE" />
+							<field name="weekday4" type="text" default="Donnerstag" label="DAY" size="10" description="DAY" />
+							<field name="weekday4_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday4_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday4_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday4_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday4_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section5">
+							<field name="note5" type="note" class="alert alert-success" label="DAY_5_NOTE" />
+							<field name="weekday5" type="text" default="Freitag" label="DAY" size="10" description="DAY" />
+							<field name="weekday5_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday5_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday5_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday5_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday5_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>
+						<fieldset name="section6">
+							<field name="note6" type="note" class="alert alert-success" label="DAY_6_NOTE" />
+							<field name="weekday6" type="text" default="Samstag" label="DAY" size="10" description="DAY" />
+							<field name="weekday6_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday6_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday6_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday6_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday6_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>						
+						</fieldset>
+						<fieldset name="section7">
+							<field name="note7" class="alert alert-success" type="note" label="DAY_7_NOTE" />
+							<field name="weekday7" type="text" default="Sonntag" label="DAY" size="10" description="DAY" />
+							<field name="weekday7_active" type="switcher" filter="integer" class="btn-group" default="1" label="DAY_ACTIVE" description="DAY_ACTIVE">
+								<option value="0">CLOSE</option>
+								<option value="1">OPEN</option>
+							</field>
+							<field
+								name="weekday7_times"
+								type="subform"
+								label="DAY_TIMES"
+								showon="weekday7_active:1"
+								layout="joomla.form.field.subform.repeatable-table"
+								>
+								<form>
+									<field name="weekday7_from"
+										type="text" 
+										default="09:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})"
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_FROM" 
+										description="TIME_FORMAT_DESC" 
+									/>
+									<field name="weekday7_to" 
+										type="text" 
+										default="18:00"
+										pattern="^(?:\d|[01]\d|2[0-3]):([0-5][0-9]$|[0-5][0-9][AaPp]{1}[Mm]{1})" 
+										size="10" 
+										maxlength="7" 
+										label="TIME_1_TO" 
+										description="TIME_FORMAT_DESC" 
+									/>
+								</form>
+							</field>
+						</fieldset>												
+					</form>
+				</field>
+			</fieldset>
+			
+			<fieldset name="advanced">
+				<field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" class="form-select" validate="moduleLayout" />
+				<field name="moduleclass_sfx" type="textarea" rows="3" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field name="cachemode" type="hidden" default="itemid">
+					<option value="itemid"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

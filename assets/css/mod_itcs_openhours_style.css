@@ -1,0 +1,170 @@
+/**
+ * mod_itcs_openhours - CSS3 based Module by it-conserv.de
+ * CSS Style is a free resource from http://littlesnippets.net/
+ * ------------------------------------------------------------------------
+ * @package     mod_itcs_openhours
+ * @author      it-conserv.de
+ * @copyright   2022 it-conserv.de
+ * @license     GNU/GPLv3 <http://www.gnu.org/licenses/gpl-3.0.de.html>
+ * @link        https://it-conserv.de
+ * ------------------------------------------------------------------------
+*/
+.openhours {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	line-height: 1.8em;
+	max-width: 310px;
+}
+
+.openhours .header, .openhours table{
+	margin: 0px;
+}
+
+.openhours tr:hover td{
+	background: transparent none repeat scroll 0 0;
+}
+
+.openhours table, .openhours td{
+	border: 0px;
+}
+
+.openhours td{
+	border-bottom: 1px solid;
+}
+	
+.openhours .dopen td, .openhours tr.dopen:hover td{
+	background-color: rgba(230, 245, 180, 0.75);
+	color: #333333;
+}
+	
+.openhours .dclose td, .openhours tr.dclose:hover td {
+	background-color: rgba(255, 200, 200, 0.75);
+	color: #333333;
+}
+
+.openhours p.dopen{color: rgb(50, 150, 50);}
+.openhours p.dclose{color: rgb(200, 75, 75);}
+
+/* ------------------------------------------ */
+
+	figure.fig_openhours {
+		color: #fff;
+		position: relative;
+		float: left;
+		overflow: hidden;
+		margin: 10px 1%;
+		max-width: 310px;
+		width: 100%;
+		text-align: center;
+	}
+
+	figure.fig_openhours button{
+		margin: 1rem;
+	}
+	
+	figure.fig_openhours * {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-transition: all 0.45s ease-in-out;
+		transition: all 0.45s ease-in-out;
+	}
+	
+	figure.fig_openhours i {
+		border-radius: 50%;
+		color: #ffffff;
+		display: inline-block;
+		font-size: 40px;
+		height: 70px;
+		line-height: 70px;
+		width: 70px;
+		z-index: 1;
+		border: 2px solid #ffffff;
+	}
+	
+	figure.fig_openhours figcaption {
+		margin-top: -35px;
+		color: #cccccc;
+		padding: 50px 14px 14px;
+		border-radius: 8px;
+		background: #333333;
+		width: 100%;
+	}
+	
+	figure.fig_openhours figcaption > p {
+		font-weight: 500;
+		background: #efefef;
+		color: #333333;
+		padding: 10px 40px;
+		margin: 14px -14px 0 -14px;
+		line-height: 1.5rem;
+	}
+	
+	figure.fig_openhours h3,
+	figure.fig_openhours p {
+		margin: 0;
+	}
+	
+	figure.fig_openhours p {
+		font-size: 0.9em;
+	}
+	
+	figure.fig_openhours h3 {
+		width: 100%;
+		display: block;
+		margin-bottom: 30px;
+		line-height: 2rem;		
+		color: #cccccc;
+		text-transform: uppercase;
+		position: relative;
+		text-align: center;
+		hyphens: auto;
+	}
+	
+	figure.fig_openhours h3:after {
+		background: #ededed none repeat scroll 0 0;
+		content: "";
+		height: 1px;
+		left: 50%;
+		margin-left: -30px;
+		bottom: -12px;
+		position: absolute;
+		width: 60px;
+	}
+
+	figure.fig_openhours:hover i {
+		-webkit-transform: rotateY(180deg);
+		transform: rotateY(180deg);
+	}
+	
+	figure.fig_openhours.blue i {
+		background: #2980b9;
+	}
+
+	figure.fig_openhours.red i {
+		background: #c0392b;
+	}
+	
+	figure.fig_openhours.yellow i {
+		background: #e67e22;
+	}
+	
+	figure.fig_openhours.navy i {
+		background: #34495e;
+	}
+
+	figure.fig_openhours:hover.blue figcaption {
+		background: #164666;
+	}
+
+	figure.fig_openhours:hover.red figcaption {
+		background: #6d2018;
+	}
+
+	figure.fig_openhours:hover.yellow figcaption {
+		background: #924d10;
+	}
+
+	figure.fig_openhours:hover.navy figcaption {
+		background: #10161c;
+	}
